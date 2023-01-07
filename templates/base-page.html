@@ -26,41 +26,10 @@
 </head>
 
 <body>
-    <div class="container-fluid">
-        <div class="row bg-secondary py-2 px-xl-5">
-            <div class="col-lg-6 d-none d-lg-block">
-                <div class="d-inline-flex align-items-center">
-                    <a class="text-dark" href="">FAQs</a>
-                    <span class="text-muted px-2">|</span>
-                    <a class="text-dark" href="">Help</a>
-                    <span class="text-muted px-2">|</span>
-                    <a class="text-dark" href="">Support</a>
-                </div>
-            </div>
-            <div class="col-lg-6 text-center text-lg-right">
-                <div class="d-inline-flex align-items-center">
-                    <a class="text-dark px-2" href="">
-                        <i class="fab fa-facebook-f"></i>
-                    </a>
-                    <a class="text-dark px-2" href="">
-                        <i class="fab fa-twitter"></i>
-                    </a>
-                    <a class="text-dark px-2" href="">
-                        <i class="fab fa-linkedin-in"></i>
-                    </a>
-                    <a class="text-dark px-2" href="">
-                        <i class="fab fa-instagram"></i>
-                    </a>
-                    <a class="text-dark pl-2" href="">
-                        <i class="fab fa-youtube"></i>
-                    </a>
-                </div>
-            </div>
-        </div>
         <div class="row align-items-center py-3 px-xl-5">
             <div class="col-lg-3 d-none d-lg-block">
-                <a href="" class="text-decoration-none">
-                    <h1 class="m-0 display-5 font-weight-semi-bold"><span class="text-primary font-weight-bold border px-3 mr-1">E</span>Shopper</h1>
+                <a href="{% url 'index'%}" class="text-decoration-none">
+                    <h1 class="m-0 display-5 font-weight-semi-bold"><span class="text-primary font-weight-bold border px-3 mr-1">S</span>Shmot_store</h1>
                 </a>
             </div>
             <div class="col-lg-6 col-6 text-left">
@@ -84,15 +53,14 @@
                     <i class="fas fa-shopping-cart text-primary"></i>
                     <span class="badge">0</span>
                 </a>
-                <a href="#" class="col-lg-3 col-6 nav-link dropdown-toggle" data-toggle="dropdown" aria-expanded="fasle">Log/Res</a>
-                <ul class="sidebar-nav">
+                <a class="text-right sidebar-nav">
                    {% if user.is_authenticated %}
-                     <li>User: {{ user.get_username }}</li>
-                     <li><a href="{% url 'logout'%}?next={{request.path}}">Logout</a></li>
+                     <a>User: {{ user.get_username }}</a>
+                     <a href="{% url 'logout'%}?next={{request.path}}">Logout</a>
                    {% else %}
-                     <li><a href="{% url 'login'%}?next={{request.path}}">Login</a></li>
+                     <a href="{% url 'login'%}?next={{request.path}}">Login</a>
                    {% endif %}
-                </ul>
+                </a>
             </div>
         </div>
     </div>
@@ -100,12 +68,9 @@
 {% block container %}
 
 {% endblock container %}
-    <!-- Back to Top -->
-    <!-- Footer End -->
-
     <!-- JavaScript Libraries -->
-    <script src="https://code.jquery.com/jquery-3.4.1.min.js"></script>
-    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/js/bootstrap.bundle.min.js"></script>
+    <script src="{%static 'https://code.jquery.com/jquery-3.4.1.min.js'%}"></script>
+    <script src=" {%static 'https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/js/bootstrap.bundle.min.js'%}"></script>
     <script src="{%static 'lib/easing/easing.min.js' %}"></script>
     <script src="{%static  'lib/owlcarousel/owl.carousel.min.js' %}"></script>
 
@@ -114,6 +79,7 @@
     <script src="{%static 'mail/contact.js' %}"></script>
     <!-- Template Javascript -->
     <script src="{%static 'js/main.js' %}"></script>
+    <script src="{%static 'js/custom.js' %}"></script>
 </body>
 
 </html>
