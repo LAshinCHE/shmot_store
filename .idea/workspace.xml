@@ -5,11 +5,12 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="30e40a5f-6b96-4ba6-b488-a3279a4da241" name="Changes" comment="">
-      <change afterPath="$PROJECT_DIR$/store/migrations/0001_initial.py" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/store/migrations/0002_rename_orederitem_orderitem_alter_order_options_and_more.py" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/db.sqlite3" beforeDir="false" afterPath="$PROJECT_DIR$/db.sqlite3" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/store/admin.py" beforeDir="false" afterPath="$PROJECT_DIR$/store/admin.py" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/store/models.py" beforeDir="false" afterPath="$PROJECT_DIR$/store/models.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/store/tests.py" beforeDir="false" afterPath="$PROJECT_DIR$/store/tests.py" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -140,7 +141,9 @@
       <workItem from="1673108491788" duration="7939000" />
       <workItem from="1673122936757" duration="9339000" />
       <workItem from="1673207249849" duration="677000" />
-      <workItem from="1673277414850" duration="7705000" />
+      <workItem from="1673277414850" duration="7855000" />
+      <workItem from="1673394104923" duration="4183000" />
+      <workItem from="1673472742715" duration="11874000" />
     </task>
     <servers />
   </component>

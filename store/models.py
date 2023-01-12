@@ -1,22 +1,45 @@
+import uuid
+from decimal import Decimal
+
 from django.contrib.auth.models import User
-from django.db import models
+from django.db import models, transaction
+from django.db.models import Sum
+from django.db.models.signals import post_save, post_delete
+from django.dispatch import receiver
 from django.utils import timezone
 
 
 class Product(models.Model):
     name = models.CharField(max_length=255, verbose_name='product_name')
-    code = models.CharField(max_length=255, verbose_name='product_code')
-    price = models.DecimalField(max_digits=28,decimal_places=2)
-    unit = models.CharField(max_length=255, blank=True,null=True)
+    code = models.CharField(max_length=100, blank=True, unique=True, default=uuid.uuid4)
+    price = models.DecimalField(max_digits=28, decimal_places=2)
+    unit = models.CharField(max_length=255, blank=True, null=True)
     image_url = models.URLField(blank=True, null=True)
     note = models.TextField(blank=True, null=True)
+
+    class Meta:
+        ordering = ['pk']
+
+    def __str__(self):
+        return f'{self.name} - {self.price}'
 
 
 class Payment(models.Model):
     user = models.ForeignKey(User, on_delete=models.CASCADE)
-    amount = models.DecimalField(max_digits=20,decimal_places=2, blank=True, null=True)
+    amount = models.DecimalField(max_digits=20, decimal_places=2, blank=True, null=True)
     time = models.DateTimeField(auto_now_add=True)
     comment = models.TextField(blank=True, null=True)
+
+    class Meta:
+        ordering = ['pk']
+
+    def __str__(self):
+        return f'{self.user} - {self.amount}'
+
+    @staticmethod
+    def get_balance(user: User):
+        balance = Payment.objects.filter(user=user).aggregate(Sum('amount'))['amount_sum']
+        return balance or Decimal(0)
 
 
 class Order(models.Model):
@@ -35,10 +58,95 @@ class Order(models.Model):
     payment = models.ForeignKey(Payment, on_delete=models.PROTECT, blank=True, null=True)
     comment = models.TextField(blank=True, null=True)
 
+    class Meta:
+        ordering = ['pk']
 
-class OrederItem(models.Model):
+    def __str__(self):
+        return f'{self.user} - {self.price} - {self.creation_time}'
+
+    @staticmethod
+    def get_cart(user: User):
+        cart = Order.objects.filter(user=user,
+                                    status=Order.STATUS_CART
+                                    ).first()
+        if cart and (timezone.now() - cart.creation_time).days > 7:
+            cart.delete()
+            cart = None
+
+        if not cart:
+            cart = Order.objects.create(user=user,
+                                        status=Order.STATUS_CART,
+                                        amount=0,)
+        return cart
+
+    def get_amount(self):
+        amount = Decimal(0)
+        for item in self.orderitem_set.all():
+            amount += item.amount
+        return amount
+
+    def make_order(self):
+        items = self.orderitem_set.all()
+        if items and self.status == Order.STATUS_CART:
+            self.status = Order.STATUS_WAITING_FOR_PAYMENT
+            self.save()
+            auto_payment_unpaid_orders(self.user)
+
+    @staticmethod
+    def get_amount_of_unpaid_orders(user: User):
+        amount = Order.objects.filter(user=user,
+                                      status=Order.STATUS_WAITING_FOR_PAYMENT
+                                      ).aggregate(Sum('amount'))['amount_sum']
+        return amount or Decimal(0)
+
+
+class OrderItem(models.Model):
     order = models.ForeignKey(Order, on_delete=models.CASCADE)
     product = models.ForeignKey(Product, on_delete=models.PROTECT)
-    quality = models.PositiveIntegerField(default=1)
+    quantity = models.PositiveIntegerField(default=1)
     prices = models.DecimalField(max_digits=20, decimal_places=2)
-    discount =models.DecimalField(max_digits=20, decimal_places=2, default=0)
+    discount = models.DecimalField(max_digits=20, decimal_places=2, default=0)
+
+    class Meta:
+        ordering = ['pk']
+
+    def __str__(self):
+        return f'{self.product} - {self.prices} - {self.discount}'
+
+    @property
+    def amount(self):
+        return self.quantity * (self.price - self.discount)
+
+
+@transaction.atomic()
+def auto_payment_unpaid_orders(user: User):
+    unpaid_orders = Order.objects.filter(user=user,
+                                          status=Order.STATUS_WAITING_FOR_PAYMENT)
+    for order in unpaid_orders:
+        if Payment.get_balance(user) < order.amount:
+            break
+        order.payment = Payment.objects.all().last()
+        order.status = Order.STATUS_PAID
+        order.save()
+        Payment.objects.create(user=user,
+                               amount=-order.amount)
+
+
+@receiver(post_save, sender=OrderItem)
+def recalculate_order_amount_after_save(sender, instance, **kwargs):
+    order = instance.order
+    order.amount = order.get_amount()
+    order.save()
+
+
+@receiver(post_delete, sender=OrderItem)
+def recalculate_order_amount_after_delete(sender, instance, **kwargs):
+    order = instance.order
+    order.amount = order.get_amount()
+    order.save()
+
+
+@receiver(post_save, sender=Payment)
+def auto_payment(sender, instance, **kwargs):
+    user = instance.user
+    auto_payment_unpaid_orders(user)
