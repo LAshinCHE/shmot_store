@@ -5,7 +5,9 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="30e40a5f-6b96-4ba6-b488-a3279a4da241" name="Changes" comment="">
-      <change beforePath="$PROJECT_DIR$/store/models.py" beforeDir="false" afterPath="$PROJECT_DIR$/store/models.py" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/templates/cart.html" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.gitignore" beforeDir="false" afterPath="$PROJECT_DIR$/.gitignore" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -68,10 +70,10 @@
       <recent name="C:\Users\Lashin\termeh\shmot_store\main" />
     </key>
     <key name="MoveFile.RECENT_KEYS">
+      <recent name="C:\Users\Lashin\termeh\shmot_store\templates" />
       <recent name="C:\Users\Lashin\termeh\shmot_store\authentication" />
       <recent name="C:\Users\Lashin\termeh\shmot_store\templates\auth" />
       <recent name="C:\Users\Lashin\termeh\shmot_store\authentication\migrations" />
-      <recent name="C:\Users\Lashin\termeh\shmot_store\templates" />
       <recent name="C:\Users\Lashin\termeh\shmot_store\store\template" />
     </key>
   </component>
@@ -140,7 +142,7 @@
       <workItem from="1673394104923" duration="4183000" />
       <workItem from="1673472742715" duration="12372000" />
       <workItem from="1673600415191" duration="3350000" />
-      <workItem from="1673623128420" duration="2044000" />
+      <workItem from="1673623128420" duration="2744000" />
     </task>
     <servers />
   </component>
