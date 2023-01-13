@@ -38,7 +38,7 @@ class Payment(models.Model):
 
     @staticmethod
     def get_balance(user: User):
-        balance = Payment.objects.filter(user=user).aggregate(Sum('amount'))['amount_sum']
+        balance = Payment.objects.filter(user=user).aggregate(Sum('amount'))['amount__sum']
         return balance or Decimal(0)
 
 
@@ -62,7 +62,7 @@ class Order(models.Model):
         ordering = ['pk']
 
     def __str__(self):
-        return f'{self.user} - {self.price} - {self.creation_time}'
+        return f'{self.user} - {self.amount} - {self.creation_time} - {self.status}'
 
     @staticmethod
     def get_cart(user: User):
@@ -96,7 +96,7 @@ class Order(models.Model):
     def get_amount_of_unpaid_orders(user: User):
         amount = Order.objects.filter(user=user,
                                       status=Order.STATUS_WAITING_FOR_PAYMENT
-                                      ).aggregate(Sum('amount'))['amount_sum']
+                                      ).aggregate(Sum('amount'))['amount__sum']
         return amount or Decimal(0)
 
 
@@ -115,13 +115,13 @@ class OrderItem(models.Model):
 
     @property
     def amount(self):
-        return self.quantity * (self.price - self.discount)
+        return self.quantity * (self.prices - self.discount)
 
 
 @transaction.atomic()
 def auto_payment_unpaid_orders(user: User):
     unpaid_orders = Order.objects.filter(user=user,
-                                          status=Order.STATUS_WAITING_FOR_PAYMENT)
+                                         status=Order.STATUS_WAITING_FOR_PAYMENT)
     for order in unpaid_orders:
         if Payment.get_balance(user) < order.amount:
             break
