@@ -62,7 +62,7 @@ class Order(models.Model):
         ordering = ['pk']
 
     def __str__(self):
-        return f'{self.user} - {self.amount} - {self.creation_time} - {self.status}'
+        return f'{self.user}  - {self.creation_time} - {self.status}'
 
     @staticmethod
     def get_cart(user: User):
