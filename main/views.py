@@ -13,3 +13,7 @@ def cart(request):
 
 def contact(request):
   return render(request, "contact.html",)
+
+
+def detail(request):
+  return render(request, "detail.html",)
