@@ -5,3 +5,11 @@ from django.template import  loader
 
 def index(request):
   return render(request, "index.html",)
+
+
+def cart(request):
+  return render(request, "cart.html",)
+
+
+def contact(request):
+  return render(request, "contact.html",)
