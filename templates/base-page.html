@@ -6,8 +6,6 @@
     <meta charset="utf-8">
     <title>{% block title %}{% endblock title%}</title>
 
-
-
     <!-- Favicon -->
     <link href="{% static '/img/favicon.ico' %}" rel="icon">
 
@@ -26,6 +24,9 @@
 </head>
 
 <body>
+
+    <!-- Topbar Start -->
+
         <div class="row align-items-center py-3 px-xl-5">
             <div class="col-lg-3 d-none d-lg-block">
                 <a href="{% url 'index'%}" class="text-decoration-none">
@@ -33,26 +34,18 @@
                 </a>
             </div>
             <div class="col-lg-6 col-6 text-left">
-                <form action="">
-                    <div class="input-group">
-                        <input type="text" class="form-control" placeholder="Search for products">
-                        <div class="input-group-append">
-                            <span class="input-group-text bg-transparent text-primary">
-                                <i class="fa fa-search"></i>
-                            </span>
-                        </div>
-                    </div>
-                </form>
             </div>
             <div class="col-lg-3 col-6 text-right">
-                <a href="" class="btn border">
-                    <i class="fas fa-heart text-primary"></i>
-                    <span class="badge">0</span>
-                </a>
+
+                <!-- SHOPPING CART -->
+
                 <a href="" class="btn border">
                     <i class="fas fa-shopping-cart text-primary"></i>
                     <span class="badge">0</span>
                 </a>
+
+                <!-- LOGIN BUTTON -->
+
                 <a class="text-right sidebar-nav">
                    {% if user.is_authenticated %}
                      <a>User: {{ user.get_username }}</a>
@@ -71,22 +64,25 @@
             </div>
         </div>
     </div>
+
     <!-- Topbar End -->
+
+
 {% block container %}
 
 {% endblock container %}
     <!-- JavaScript Libraries -->
-    <script src="{%static 'https://code.jquery.com/jquery-3.4.1.min.js'%}"></script>
-    <script src=" {%static 'https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/js/bootstrap.bundle.min.js'%}"></script>
-    <script src="{%static 'lib/easing/easing.min.js' %}"></script>
-    <script src="{%static  'lib/owlcarousel/owl.carousel.min.js' %}"></script>
+    <script src="https://code.jquery.com/jquery-3.4.1.min.js"></script>
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/js/bootstrap.bundle.min.js"></script>
+    <script src="lib/easing/easing.min.js"></script>
+    <script src="lib/owlcarousel/owl.carousel.min.js"></script>
 
     <!-- Contact Javascript File -->
     <script src="{%static 'mail/jqBootstrapValidation.min.js'%}"></script>
     <script src="{%static 'mail/contact.js' %}"></script>
     <!-- Template Javascript -->
-    <script src="{%static 'js/main.js' %}"></script>
-    <script src="{%static 'js/custom.js' %}"></script>
+    <script src="{% static 'js/main.js' %}"></script>
+
 </body>
 
 </html>
