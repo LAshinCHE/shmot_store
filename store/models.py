@@ -60,7 +60,7 @@ class Order(models.Model):
 
     class Meta:
         ordering = ['pk']
-
+       # KIRILL WAS HERE
     def __str__(self):
         return f'{self.user}  - {self.creation_time} - {self.status}'
 
