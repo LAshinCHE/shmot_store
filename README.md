@@ -133,3 +133,7 @@ class Order(models.Model):
         return f'{self.user}  - {self.creation_time} - {self.status}'
 
 ```
+Демонстрация работы
+====================
+
+https://drive.google.com/file/d/1fZEviY7L-kXVvfrHiljvrKbLY94K-dyd/view?usp=sharing
