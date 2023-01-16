@@ -1,7 +1,8 @@
 Магазин одежды Shmot_store
 ============
 ![Image alt](https://github.com/LAshinCHE/shmot_store/blob/main/index.png)
-dsdssdd
 
-![Image at](https://github.com/LAshinCHE/shmot_store/blob/main/index2.png)
+Цель проекта
+-------------
+Создание макета интернет-магазина с возможностью редактирвоать/добавлять товары через панель админа и наличием системы аккаунтов с сохранением корзины пользователя.
 
