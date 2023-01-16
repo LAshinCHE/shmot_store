@@ -1,2 +1,2 @@
-shmot_store
+Магазин одежды Shmot_store
 ============
