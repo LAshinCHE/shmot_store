@@ -1,0 +1,1 @@
+# shmot_store
