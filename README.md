@@ -74,3 +74,62 @@ urlpatterns = [
 ]
 ```
 
+Реализация `Model`
+
+```python
+class Product(models.Model):
+    name = models.CharField(max_length=255, verbose_name='product_name')
+    code = models.CharField(max_length=100, blank=True, unique=True, default=uuid.uuid4)
+    price = models.DecimalField(max_digits=28, decimal_places=2)
+    unit = models.CharField(max_length=255, blank=True, null=True)
+    image_url = models.CharField(max_length=255,blank=True, null=True)
+    note = models.TextField(blank=True, null=True)
+
+    class Meta:
+        ordering = ['pk']
+
+    def __str__(self):
+        return f'{self.name} - {self.price}'
+
+
+class Payment(models.Model):
+    user = models.ForeignKey(User, on_delete=models.CASCADE)
+    amount = models.DecimalField(max_digits=20, decimal_places=2, blank=True, null=True)
+    time = models.DateTimeField(auto_now_add=True)
+    comment = models.TextField(blank=True, null=True)
+
+    class Meta:
+        ordering = ['pk']
+
+    def __str__(self):
+        return f'{self.user} - {self.amount}'
+
+    @staticmethod
+    def get_balance(user: User):
+        balance = Payment.objects.filter(user=user).aggregate(Sum('amount'))['amount__sum']
+        return balance or Decimal(0)
+
+
+class Order(models.Model):
+    STATUS_CART = '1_in_cart'
+    STATUS_WAITING_FOR_PAYMENT = '2_waiting_for_payment'
+    STATUS_PAID = '3_paid'
+    STATUS_CHOICES = [
+        (STATUS_CART, 'in_cart'),
+        (STATUS_WAITING_FOR_PAYMENT, 'waiting_for_payment'),
+        (STATUS_PAID, 'paid')
+    ]
+    user = models.ForeignKey(User, on_delete=models.CASCADE)
+    status = models.CharField(max_length=32, choices=STATUS_CHOICES, default=STATUS_CART)
+    amount = models.DecimalField(max_digits=20, decimal_places=2, blank=True, null=True)
+    creation_time = models.DateTimeField(auto_now_add=True)
+    payment = models.ForeignKey(Payment, on_delete=models.PROTECT, blank=True, null=True)
+    comment = models.TextField(blank=True, null=True)
+
+    class Meta:
+        ordering = ['pk']
+       # KIRILL WAS HERE
+    def __str__(self):
+        return f'{self.user}  - {self.creation_time} - {self.status}'
+
+```
