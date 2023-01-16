@@ -135,7 +135,7 @@ class Order(models.Model):
 ```
 #### Реализация заполнения карточек товара на основе данных из БД ####
 
-```python
+```html
 
 <div class="container-fluid pt-5">
         <div class="text-center mb-4">
