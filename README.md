@@ -43,3 +43,24 @@
 
 При работе над нашим проектом были написаны два приложения: `authentication` (для системы аутентификации) и `store` для работы с разделами магазина.
 
+Когда на сервер приходит запрос, он переадресуется Django, который пытается сообразить, что же конкретно от него просят. Для начала он берет адрес веб-страницы и пробует понять — что же нужно сделать. Эту часть процесса в Django выполняет urlresolver. Он берет список шаблонов и пытается сопоставить их с URL. Django сверяет шаблоны сверху вниз и, если что-то совпадает, он перенаправляет запрос соответствующей функции (которая называется view).
+
+`shmot_store/main/urls.py`
+
+```python
+from django.contrib import admin
+from django.urls import path, include
+
+from main import views
+
+
+urlpatterns = [
+    path('', views.index, name='index'),
+    path('admin/', admin.site.urls),
+    path('cart/', views.cart, name='cart'),
+    path('contact/', views.contact, name='contact'),
+    path('detail/<int:pk>', views.detail, name='detail'),
+    path('auth/', include('authentication.urls')),
+]
+
+```
