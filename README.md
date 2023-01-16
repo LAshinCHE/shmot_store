@@ -1,6 +1,6 @@
 Магазин одежды Shmot_store
 ============
-![Image alt](https://github.com/LAshinCHE/shmot_store/blob/main/index.png)
+![Заглавная страница сайта](https://github.com/LAshinCHE/shmot_store/blob/main/index.png)
 
 Цель проекта
 -------------
@@ -28,3 +28,5 @@
 ### Используемый паттерн MVC ###
 
 Фреймворк Django реализует архитектурный паттерн Model-View-Template или сокращенно MVT, который по факту является модификацией распростаненного в веб-программировании паттерна MVC (Model-View-Controller). 
+
+![MVC](https://github.com/LAshinCHE/shmot_store/blob/main/django_mvc.png)
