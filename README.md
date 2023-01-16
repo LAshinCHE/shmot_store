@@ -74,7 +74,7 @@ urlpatterns = [
 ]
 ```
 
-Реализация `Model`
+Реализация `Model` для работы с системой корзины
 
 ```python
 class Product(models.Model):
